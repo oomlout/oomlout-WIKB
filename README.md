@@ -22,7 +22,7 @@ A command line python tool used to upload generated files to our wiki
 		
 	python %WIKBdirectory%WIKBmain.py -si oomlout -bd C:\KB\oomp-scripts\oomp-gen\parts\familyIndex-wiki.html -wb projects/oomp/part/familyIndex
 
-### Upload Directory of files
+### Upload Directory of Files
 	* -rm A (all)
 	* -si oomlout (name of profile setup in pywikibot)
 	* -fa -wiki.html (what to add to the end of a file)
