@@ -5,7 +5,8 @@ import pywikibot, os, time
 def WIKBuploadPage(uploadName, uploadFile):
 	page = pywikibot.Page(site, uploadName)
 	oompFileName = uploadFile
-	# print "FileName:  " + oompFileName
+	print "FileName:  " + oompFileName
+	print "Uploading To:  " + uploadName
 	oompFile = open(oompFileName)
 	oompFileContents = oompFile.read()
 	page.text = oompFileContents
