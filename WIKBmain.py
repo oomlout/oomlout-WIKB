@@ -7,11 +7,14 @@ def WIKBuploadPage(uploadName, uploadFile):
 	oompFileName = uploadFile
 	print "FileName:  " + oompFileName
 	print "Uploading To:  " + uploadName
-	oompFile = open(oompFileName)
-	oompFileContents = oompFile.read()
-	page.text = oompFileContents
-	page.save('Updating File - ' + time.strftime("%d/%m/%Y %H:%M:%S"))  # Saves the page
-
+	try:
+		oompFile = open(oompFileName)
+		oompFileContents = oompFile.read()
+		page.text = oompFileContents
+		page.save('Updating File - ' + time.strftime("%d/%m/%Y %H:%M:%S"))  # Saves the page
+	except:
+		"File Not Found: " + oompFileName
+		
 def WIKBuploadAll(baseDirectory, webBase, fileAddition):
 
 	print "Uploading All OOMP Files:"
