@@ -12,6 +12,7 @@ def WIKBuploadPage(uploadName, uploadFile):
 		oompFileContents = oompFile.read()
 		page.text = oompFileContents
 		page.save('Updating File - ' + time.strftime("%d/%m/%Y %H:%M:%S"))  # Saves the page
+		print "Page Saved."
 	except:
 		"File Not Found: " + oompFileName
 		
@@ -25,12 +26,24 @@ def WIKBuploadAll(baseDirectory, webBase, fileAddition):
 		if idString <> "" :
 			WIKBuploadPage(webBase + idString, baseDirectory + idString + "/" + idString + fileAddition)
 
+def WIKBuploadAllFromFile(baseDirectory, webBase, fileAddition):
 
+	print "Uploading All " + fileAddition + " Files: " + baseDirectory 
+
+	for (dirpath, dirnames, filenames) in os.walk(baseDirectory):
+		for x in filenames:
+			idString = x.replace(fileAddition, "")
+			additionTest = x.replace(idString, "")
+			print "IDSTRING DEBUG " +  idString + "    " + additionTest + "  " + fileAddition
+			print "     Uploading ---> " + idString
+			if fileAddition == additionTest:
+				WIKBuploadPage(webBase + idString, baseDirectory + "/" + idString + fileAddition)
+				
 
 import argparse
 
 parser = argparse.ArgumentParser(description='OOMLOUT-WIKB -- Bot for uploading WikiPages')
-parser.add_argument('-rm','--runMode', help='Sets the runmode for special circumstances (A -- Generate All)', required=False)
+parser.add_argument('-rm','--runMode', help='Sets the runmode for special circumstances (A -- Upload All Directory, B - upload all with same end of file name.)', required=False)
 parser.add_argument('-si','--wsite', help='Name of the site you are uploading to', required=True)
 parser.add_argument('-ln','--language', help="Language to be uploaing in (default 'en')", required=False)
 parser.add_argument('-bd','--baseDirectory', help="Basedirectory to work in", required=False)
@@ -72,5 +85,7 @@ print "fileAddition:" + fileAddition
 
 if runMode == "A":
 	WIKBuploadAll(baseDirectory, webBase, fileAddition)
+elif runMode == "B":
+	WIKBuploadAllFromFile(baseDirectory, webBase, fileAddition)
 else:
 	WIKBuploadPage(webBase,baseDirectory)
