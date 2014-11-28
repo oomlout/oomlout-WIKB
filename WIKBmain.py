@@ -84,7 +84,12 @@ site = pywikibot.Site(language, wsite)  # The site we want to run our bot on
 print "fileAddition:" + fileAddition
 
 if runMode == "A":
-	WIKBuploadAll(baseDirectory, webBase, fileAddition)
+	bds = baseDirectory.split(",")
+	for baseDirectory in bds:
+		if ".html" in bds:
+			WIKBuploadPage(webBase,baseDirectory)
+		else:
+			WIKBuploadAll(baseDirectory, webBase, fileAddition)
 elif runMode == "B":
 	WIKBuploadAllFromFile(baseDirectory, webBase, fileAddition)
 else:
