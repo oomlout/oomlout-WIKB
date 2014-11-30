@@ -15,7 +15,7 @@ def WIKBuploadPage(uploadName, uploadFile):
 		print "Page Saved."
 	except:
 		"File Not Found: " + oompFileName
-		
+
 def WIKBuploadAll(baseDirectory, webBase, fileAddition):
 
 	print "Uploading All OOMP Files:"
@@ -28,7 +28,7 @@ def WIKBuploadAll(baseDirectory, webBase, fileAddition):
 
 def WIKBuploadAllFromFile(baseDirectory, webBase, fileAddition):
 
-	print "Uploading All " + fileAddition + " Files: " + baseDirectory 
+	print "Uploading All " + fileAddition + " Files: " + baseDirectory
 
 	for (dirpath, dirnames, filenames) in os.walk(baseDirectory):
 		for x in filenames:
@@ -38,7 +38,7 @@ def WIKBuploadAllFromFile(baseDirectory, webBase, fileAddition):
 			print "     Uploading ---> " + idString
 			if fileAddition == additionTest:
 				WIKBuploadPage(webBase + idString, baseDirectory + "/" + idString + fileAddition)
-				
+
 
 import argparse
 
@@ -73,24 +73,26 @@ if args['webBase'] <> None:
 baseDirectory=""
 if args['baseDirectory'] <> None:
 	baseDirectory = args['baseDirectory']
-	
+
 fileAddition=""
 if args['fileAddition'] <> None:
 	fileAddition = args['fileAddition']
 	fileAddition = fileAddition.replace("'",'')
 
-site = pywikibot.Site(language, wsite)  # The site we want to run our bot on	
+site = pywikibot.Site(language, wsite)  # The site we want to run our bot on
 
 print "fileAddition:" + fileAddition
 
 if runMode == "A":
 	bds = baseDirectory.split(",")
 	for baseDirectory in bds:
-		if ".html" in bds:
-			WIKBuploadPage(webBase,baseDirectory)
-		else:
-			WIKBuploadAll(baseDirectory, webBase, fileAddition)
+		WIKBuploadAll(baseDirectory, webBase, fileAddition)
 elif runMode == "B":
 	WIKBuploadAllFromFile(baseDirectory, webBase, fileAddition)
 else:
-	WIKBuploadPage(webBase,baseDirectory)
+	bds = baseDirectory.split(",")
+	wbs = webBase.split(",")
+	count = 0
+	for baseDirectory in bds:
+		WIKBuploadPage(wbs[count],baseDirectory)
+		count = count + 1
